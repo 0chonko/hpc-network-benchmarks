@@ -15,6 +15,24 @@ These benchmarks support German Savchenko’s 2024 Vrije Universiteit Amsterdam 
 - [CPU networking](CPU/README.md#snellius-cpu-experiments) covers native, hybrid Apptainer, and fully contained runs on AMD EPYC Rome and Genoa. Hybrid bandwidth generally tracked native performance at larger message sizes.
 - [GPU communication and power](GPU/README.md#snellius-gpu-experiments) covers native and hybrid runs on NVIDIA A100 and H100. The impact of containerization varied by operation, library, and node layout.
 
+### Figures from the thesis
+
+![CPU bandwidth and latency distributions on Rome and Genoa for same-rack and different-rack node pairs](docs/figures/cpu-network-noise.png)
+
+*Figures 5.14–5.15. CPU bandwidth and latency by partition, container configuration, and rack placement.*
+
+![Single-node A100 and H100 bandwidth versus transfer size for point-to-point, All-to-All, and AllReduce](docs/figures/single-node-gpu-bandwidth.png)
+
+*Figure 5.16. Single-node bandwidth on A100 (top) and H100 (bottom), comparing native and hybrid runs.*
+
+![Multi-node A100 and H100 bandwidth versus transfer size for point-to-point, All-to-All, and AllReduce](docs/figures/multi-node-gpu-bandwidth.png)
+
+*Figure 5.17. Multi-node bandwidth with the same GPU and operation layout.*
+
+![Bar charts comparing GPU power draw and memory utilization across communication methods](docs/figures/gpu-power-and-memory.png)
+
+*Figure 5.20. Peak average GPU power draw and memory utilization by communication method and runtime.*
+
 ## Upstream benchmarks
 
 The repository utilizes the cloud_noise and the interconnect benchmarks:
