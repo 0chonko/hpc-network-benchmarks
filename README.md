@@ -6,7 +6,7 @@ I designed and ran the native and containerized comparisons on Snellius, develop
 
 ![NVLink versus PCIe energy comparison](https://0chonko.github.io/assets/blog/green-gpu-comms/energy-nvlink-vs-pcie.svg)
 
-The [profiler write-up](https://0chonko.github.io/blog/measuring-without-mutating-designing-an-asynchronous-overhead-free-gpu-power-profiler/) explains the measurement setup. The hybrid H100 point-to-point reproduction requires access to Snellius. Follow the GPU setup below, then run `./sbatch/snellius-h100-hybrid/run-snellius-pp-all.sh` from `GPU/`. To run it on another cluster, adapt the container paths and Slurm configuration.
+The [profiler write-up](https://0chonko.github.io/blog/measuring-without-mutating-designing-an-asynchronous-overhead-free-gpu-power-profiler/) explains the measurement setup. The hybrid H100 point-to-point reproduction requires access to Snellius. Follow the GPU setup below, then run `./sbatch/snellius-h100-hybrid/run-snellius-pp-all.sh` from `GPU/`. Set the Slurm account and container paths for your allocation. The submitted jobs target one Snellius H100 node with four GPUs. The [recorded baseline log](GPU/sout/hybrid_h100/snellius_pp_Baseline_halfnode_energy_7320960.out) shows the four MPI ranks and the message-size sweep.
 
 ## Results from the Snellius study
 
@@ -14,6 +14,8 @@ These benchmarks support German Savchenko’s 2024 Vrije Universiteit Amsterdam 
 
 - [CPU networking](CPU/README.md#snellius-cpu-experiments) covers native, hybrid Apptainer, and fully contained runs on AMD EPYC Rome and Genoa. Hybrid bandwidth generally tracked native performance at larger message sizes.
 - [GPU communication and power](GPU/README.md#snellius-gpu-experiments) covers native and hybrid runs on NVIDIA A100 and H100. The impact of containerization varied by operation, library, and node layout.
+
+The repository includes the [CPU data archive](CPU/data/snellius/) and the [native](GPU/sout/native_h100/) and [hybrid](GPU/sout/hybrid_h100/) H100 logs. The GPU logs record the communication method, transfer sizes, and timings or power samples.
 
 ### Figures from the thesis
 
