@@ -5,6 +5,19 @@ node then on different ones.
 
 The base idea is to first initialize a message on the source device memory and then benchmark the time needed for moving the message to the target GPU/GPUs.
 
+## Snellius GPU experiments
+
+The 2024 thesis compared native and hybrid Apptainer runs on A100 and H100 for point-to-point, All-to-All, and AllReduce. Selected single-node bandwidth results from thesis §5.2.3 are in GB/s.
+
+| Operation | A100 native | A100 hybrid | H100 native | H100 hybrid |
+| --- | ---: | ---: | ---: | ---: |
+| CUDA-aware MPI All-to-All | 218 | 56 | 310 | 99 |
+| NCCL AllReduce | 180 | 199 | 259 | 293 |
+
+For NCCL AllReduce on A100, reported peak average GPU power draw went from 142.95 W native to 81.35 W hybrid on a single node. In the multi-node comparison it went from 65.09 W to 83 W (thesis §5.3.5).
+
+The [NVML sampler](include/nvmlClass.h) and [DCGM logger](include/dcgmiLogger.h) run asynchronously because inline driver queries distorted measured bandwidth, especially at small transfer sizes. Counter access and sampling resolution limited the study’s ability to measure energy per transfer (thesis §§4.3 and 6.2). See the [Snellius build and run instructions](../README.md#gpu-benchmarking).
+
 ## Experiment set-up
 
 For setting up the experiment we decided to always define one different MPI process for each involved GPU.

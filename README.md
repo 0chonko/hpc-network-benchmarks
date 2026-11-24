@@ -8,6 +8,13 @@ I compared A100 and H100 communication workloads across native and containerized
 
 The [profiler write-up](https://0chonko.github.io/blog/measuring-without-mutating-designing-an-asynchronous-overhead-free-gpu-power-profiler/) explains the measurement setup. To repeat the hybrid H100 point-to-point experiment on a compatible Slurm system, follow the GPU setup below, then run `./sbatch/snellius-h100-hybrid/run-snellius-pp-all.sh` from `GPU/`. The scripts use Snellius-specific container and scheduler configuration.
 
+## Results from the Snellius study
+
+These benchmarks support German Savchenko’s 2024 Vrije Universiteit Amsterdam master’s thesis, *Unveiling the Performance Landscape of Modern HPC: Containerization, Network Performance, and Energy Footprint of GPU Interconnects*.
+
+- [CPU networking](CPU/README.md#snellius-cpu-experiments) covers native, hybrid Apptainer, and fully contained runs on AMD EPYC Rome and Genoa. Hybrid bandwidth generally tracked native performance at larger message sizes.
+- [GPU communication and power](GPU/README.md#snellius-gpu-experiments) covers native and hybrid runs on NVIDIA A100 and H100. The impact of containerization varied by operation, library, and node layout.
+
 ## Upstream benchmarks
 
 The repository utilizes the cloud_noise and the interconnect benchmarks:

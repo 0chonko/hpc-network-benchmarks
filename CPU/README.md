@@ -18,6 +18,12 @@ For the last two parts a container is provided instead.
 
 In the following, all the commands assume you are in the root of the repository.
 
+## Snellius CPU experiments
+
+The 2024 thesis compared native, hybrid Apptainer, and fully contained runs on AMD EPYC Rome and Genoa. Hybrid bandwidth generally tracked native bandwidth from 256 KiB upward. Latency and bandwidth noise varied by partition and metric. The fully contained setup used in the study did not reach the performance of the high-speed interconnect (thesis §5.1).
+
+Use `scripts-native`, `scripts-hybrid`, and `scripts-spack` for the Snellius runs. The thesis describes the data and metadata layout in Appendix A. See the [repository setup instructions](../README.md#cpu-benchmarking).
+
 # Benchmarks
 This section describes how to run the benchmarks to collect performance and noise data.
 The following steps are supposed to be executed on the compute nodes of each different 
