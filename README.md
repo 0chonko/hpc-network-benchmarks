@@ -1,12 +1,12 @@
-# HPC-net-bench
+# HPC Network Benchmarks
 
 ## Snellius GPU communication measurements
 
-I compared A100 and H100 communication workloads across native and containerized runs. The [NVML sampler](GPU/include/nvmlClass.h) and [DCGM logger](GPU/include/dcgmiLogger.h) move power sampling off the benchmark timing path.
+I designed and ran the native and containerized comparisons on Snellius, developed the asynchronous power samplers, and analyzed the CPU and GPU communication results. The workloads build on [cloud_noise](https://github.com/DanieleDeSensi/cloud_noise) and [Interconnect Benchmark](https://github.com/HicrestLaboratory/interconnect-benchmark). The [NVML sampler](GPU/include/nvmlClass.h) and [DCGM logger](GPU/include/dcgmiLogger.h) move power sampling off the benchmark timing path.
 
 ![NVLink versus PCIe energy comparison](https://0chonko.github.io/assets/blog/green-gpu-comms/energy-nvlink-vs-pcie.svg)
 
-The [profiler write-up](https://0chonko.github.io/blog/measuring-without-mutating-designing-an-asynchronous-overhead-free-gpu-power-profiler/) explains the measurement setup. To repeat the hybrid H100 point-to-point experiment on a compatible Slurm system, follow the GPU setup below, then run `./sbatch/snellius-h100-hybrid/run-snellius-pp-all.sh` from `GPU/`. The scripts use Snellius-specific container and scheduler configuration.
+The [profiler write-up](https://0chonko.github.io/blog/measuring-without-mutating-designing-an-asynchronous-overhead-free-gpu-power-profiler/) explains the measurement setup. The hybrid H100 point-to-point reproduction requires access to Snellius. Follow the GPU setup below, then run `./sbatch/snellius-h100-hybrid/run-snellius-pp-all.sh` from `GPU/`. To run it on another cluster, adapt the container paths and Slurm configuration.
 
 ## Results from the Snellius study
 
@@ -35,10 +35,7 @@ These benchmarks support German Savchenko’s 2024 Vrije Universiteit Amsterdam 
 
 ## Upstream benchmarks
 
-The repository utilizes the cloud_noise and the interconnect benchmarks:
-
-https://github.com/DanieleDeSensi/cloud_noise
-https://github.com/HicrestLaboratory/interconnect-benchmark
+See [cloud_noise](https://github.com/DanieleDeSensi/cloud_noise) for the CPU benchmark build instructions and [Interconnect Benchmark](https://github.com/HicrestLaboratory/interconnect-benchmark) for the upstream GPU communication suite.
 
 ---
 #### Hardware Requirements:
@@ -54,11 +51,11 @@ https://github.com/HicrestLaboratory/interconnect-benchmark
 
 ## CPU Benchmarking
 
-- Follow instructions from [de_sensi_noise_2022] to build the project
+- Follow instructions from [cloud_noise](https://github.com/DanieleDeSensi/cloud_noise) to build the project
 
 - Build the container with apptainer locally (with sudo) or on the cbuild partition (with --fakeroot). Transfer the completed images into the `images` directory if built locally.
     ```
-    cd HPC-net-bench/CPU
+    cd hpc-network-benchmarks/CPU
     mkdir images
     apptainer build --fakeroot ~/hybrid_image.sif definitions/definition_hybrid.def
     apptainer build --fakeroot ~/contained_image.sif definitions/definition_contained.def
@@ -84,7 +81,7 @@ https://github.com/HicrestLaboratory/interconnect-benchmark
     ```
 - Build the container with apptainer locally (with sudo) or on the cbuild partition (with --fakeroot). Transfer the image to the repository on the cluster if built locally.
     ```
-    cd HPC-net-bench/GPU
+    cd hpc-network-benchmarks/GPU
     mkdir containers/images
     apptainer build --fakeroot ~/hybrid_image.sif containers/definitions/definition_hybrid.def
     apptainer build --fakeroot ~/contained_image.sif containers/definitions/definition_contained.def
