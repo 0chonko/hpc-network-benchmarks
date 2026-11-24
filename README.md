@@ -1,5 +1,15 @@
 # HPC-net-bench
 
+## Snellius GPU communication measurements
+
+I compared A100 and H100 communication workloads across native and containerized runs. The [NVML sampler](GPU/include/nvmlClass.h) and [DCGM logger](GPU/include/dcgmiLogger.h) move power sampling off the benchmark timing path.
+
+![NVLink versus PCIe energy comparison](https://0chonko.github.io/assets/blog/green-gpu-comms/energy-nvlink-vs-pcie.svg)
+
+The [profiler write-up](https://0chonko.github.io/blog/measuring-without-mutating-designing-an-asynchronous-overhead-free-gpu-power-profiler/) explains the measurement setup. To repeat the hybrid H100 point-to-point experiment on a compatible Slurm system, follow the GPU setup below, then run `./sbatch/snellius-h100-hybrid/run-snellius-pp-all.sh` from `GPU/`. The scripts use Snellius-specific container and scheduler configuration.
+
+## Upstream benchmarks
+
 The repository utilizes the cloud_noise and the interconnect benchmarks:
 
 https://github.com/DanieleDeSensi/cloud_noise
